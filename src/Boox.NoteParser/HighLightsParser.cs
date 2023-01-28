@@ -1,8 +1,9 @@
-﻿using Boox.NoteParser.Models;
+﻿using System.Globalization;
+using Boox.NoteParser.Models;
 namespace Boox.NoteParser;
 public class HighLightsParser
 {
-    private const string PageNoIndicator = "  Page No.: ";
+    private const string PageNoIndicator = "Page No.: ";
     private const string NoteSeparator = "-------------------";
     private const string DatePageSeparator = "  |  ";
     private const string StartIndicator = "Reading Notes |";
@@ -20,6 +21,7 @@ public class HighLightsParser
 
     private void ParseNotes(string[] highlightsFileContent, Book book)
     {
+        Highlight? highlight = null;
         foreach (var highlightsFileLine in highlightsFileContent)
         {
             if (string.IsNullOrEmpty(highlightsFileLine))
@@ -30,11 +32,17 @@ public class HighLightsParser
             if (highlightsFileLine.StartsWith(StartIndicator))
             {
                 (book.Title, book.Author) = GetTitleAndAuthor(highlightsFileLine);
+                highlight = book.StartNewHighLight();
                 continue;
             }
 
             if (highlightsFileLine.Contains(PageNoIndicator))
             {
+                if(highlight == null)
+                {
+                    highlight = book.StartNewHighLight();
+                }
+                (highlight.HighlightDate, highlight.PageNumber) = GetNoteDateAndPageNumber(highlightsFileLine);
                 continue;
             }
         }
@@ -54,4 +62,17 @@ public class HighLightsParser
 
         return (title, author);
     }
+
+    private (DateTime NoteTime, int PageNumber) GetNoteDateAndPageNumber(string dateAndPageLIne)
+    {
+        //2022-12-27 06:44  |  Page No.: 18
+        string[] datePageNumberComponents = dateAndPageLIne.Split(DatePageSeparator);
+
+        DateTime.TryParseExact(datePageNumberComponents[0], "yyyy-MM-dd hh:mm", CultureInfo.InvariantCulture,DateTimeStyles.None,out var noteDate);
+
+        int.TryParse(datePageNumberComponents[1].Remove(0,PageNoIndicator.Length), out int pageNumber);
+
+        return (noteDate, pageNumber);
+    }
+
 }
