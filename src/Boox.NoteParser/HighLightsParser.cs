@@ -5,8 +5,8 @@ public class HighLightsParser
 {
     private const string PageNoIndicator = "Page No.: ";
     private const string NoteSeparator = "-------------------";
-    private const string DatePageSeparator = "  |  ";
-    private const string StartIndicator = "Reading Notes |";
+    private const string DatePageSeparator = " | ";
+    private const string StartIndicator = "Reading Notes | ";
     private const string TitleStartIndicator = "<<";
     private const string TitleEndIndicator = ">>";
     private const string TitleSubtitleSeparator = "_ ";
@@ -22,6 +22,7 @@ public class HighLightsParser
     private void ParseNotes(string[] highlightsFileContent, Book book)
     {
         Highlight? highlight = null;
+        PreviousItemType previousItemType = PreviousItemType.None;
         foreach (var highlightsFileLine in highlightsFileContent)
         {
             if (string.IsNullOrEmpty(highlightsFileLine))
@@ -33,6 +34,7 @@ public class HighLightsParser
             {
                 (book.Title, book.Author) = GetTitleAndAuthor(highlightsFileLine);
                 highlight = book.StartNewHighLight();
+                previousItemType = PreviousItemType.StartSection;
                 continue;
             }
 
@@ -43,6 +45,28 @@ public class HighLightsParser
                     highlight = book.StartNewHighLight();
                 }
                 (highlight.HighlightDate, highlight.PageNumber) = GetNoteDateAndPageNumber(highlightsFileLine);
+                previousItemType = PreviousItemType.DatePageNo;
+                continue;
+            }
+
+            if (highlightsFileLine.Equals(NoteSeparator))
+            {
+                highlight = book.StartNewHighLight();
+                previousItemType = PreviousItemType.NoteSeparator; 
+                continue;
+            }
+
+            if(previousItemType == PreviousItemType.NoteSeparator && !highlightsFileLine.Contains(PageNoIndicator))
+            {
+                highlight.ChapterTitle = highlightsFileLine.Trim();
+                previousItemType = PreviousItemType.ChapterLine;
+                continue;
+            }
+
+            if(previousItemType == PreviousItemType.DatePageNo)
+            {
+                highlight.HighlightText = highlightsFileLine.Trim();
+                previousItemType = PreviousItemType.Note;
                 continue;
             }
         }
@@ -74,5 +98,4 @@ public class HighLightsParser
 
         return (noteDate, pageNumber);
     }
-
 }

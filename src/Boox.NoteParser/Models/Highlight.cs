@@ -5,6 +5,6 @@
         public string HighlightText { get; set; }
         public int PageNumber { get; set; }
         public DateTime HighlightDate { get; set; }
-        private string ChapterTitle { get; set; }
+        public string ChapterTitle { get; set; }
     }
 }

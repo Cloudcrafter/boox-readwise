@@ -1,4 +1,10 @@
 using FluentAssertions;
+using FluentAssertions.Common;
+using FluentAssertions.Equivalency;
+using Microsoft.VisualBasic;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Runtime.Intrinsics.X86;
+using Xunit;
 
 namespace Boox.NoteParser.Tests;
 
@@ -13,7 +19,7 @@ public class BooxNoteParserTests
     [Fact]
     public void GetHighlights_TitleAndAuthorPresentInFirstLine_TitleAndAuthorSet()
     {
-        string firstLine = "Reading Notes | <<My test book_ SubtTitle - Author>>Author";
+        string firstLine = "Reading Notes | <<My test book_ subtitle>>Author";
         var parser = new HighLightsParser();
 
         var book = parser.GetHighlights(new[] { firstLine });
@@ -26,14 +32,63 @@ public class BooxNoteParserTests
     [Fact]
     public void GetHighLights_NoteDateAndPageNumberPresent_NoteDateAndPageNumberSetOnHighlight()
     {
-        string firstLine = "2022-12-27 06:44  |  Page No.: 18";
+        string firstLine = "2022-12-27 06:43 | Page No.: 16";
         var parser = new HighLightsParser();
 
         var book = parser.GetHighlights(new[] { firstLine });
 
         book.Highlights.Count.Should().Be(1);
-        book.Highlights.First().PageNumber.Should().Be(18);
-        book.Highlights.First().HighlightDate.Should().Be(new DateTime(2022, 12, 27, 6, 44, 0));
+        book.Highlights.First().PageNumber.Should().Be(16);
+        book.Highlights.First().HighlightDate.Should().Be(new DateTime(2022, 12, 27, 6, 43, 0));
+    }
 
+    [Fact]
+    public void GetHighLights_NoteSeparatorPresent_NewHighLightIsStarted()
+    {
+        var lines = new[]
+        {
+            "Reading Notes | <<My test book_ SubtTitle - Author>>Author",
+            "2022-12-27 06:43 | Page No.: 16",
+            "Note text",
+            "-------------------"
+        };
+
+        var parser = new HighLightsParser();
+        var book = parser.GetHighlights(lines);
+        book.Highlights.Count.Should().Be(2);
+    }
+
+    [Fact]
+    public void GetHighLights_ChapterTitlePresent_ChapterTitleIsSet()
+    {
+        var lines = new[]
+        {
+            "Reading Notes | <<My test book_ SubtTitle - Author>>Author",
+            "2022-12-27 06:43 | Page No.: 16",
+            "Note text",
+            "-------------------",
+            "My Chapter"
+        };
+
+        var parser = new HighLightsParser();
+        var book = parser.GetHighlights(lines);
+        book.Highlights.Count.Should().Be(2);
+        book.Highlights.Last().ChapterTitle.Should().Be("My Chapter");
+    }
+
+    [Fact]
+    public void GetHighLights_NotePresent_HighLightTextIsSet()
+    {
+        var lines = new[]
+        {
+            "Reading Notes | <<My test book_ SubtTitle - Author>>Author",
+            "2022-12-27 06:43 | Page No.: 16",
+            "Note text",
+        };
+
+        var parser = new HighLightsParser();
+        var book = parser.GetHighlights(lines);
+        book.Highlights.Count.Should().Be(1);
+        book.Highlights.First().HighlightText.Should().Be(lines[2]);
     }
 }
