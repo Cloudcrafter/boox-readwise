@@ -1,5 +1,12 @@
 name: dotnet build
-on: [push]
+on:
+  push:
+    branches:
+    - main
+    - release/*
+  pull_request:
+    branches:
+    - main
 
 jobs:
   build:
@@ -13,9 +20,9 @@ jobs:
       - name: Setup .NET Core SDK ${{ matrix.dotnet-version }}
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: ${{ matrix.dotnet-version }}
+          dotnet-version: ${{ matrix.dotnet-version }}     
       - name: Install dependencies
-        run: dotnet restore
+        run: dotnet restore ../src.sln
       - name: Build
         run: dotnet build --configuration Release --no-restore
       - name: Test
