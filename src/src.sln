@@ -11,15 +11,29 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NoteParser", "NoteParser", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{948961EE-B8B0-409B-8D72-96452486B635}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Boox.ReadwiseApi.Domain", "Boox.ReadwiseApi.Domain\Boox.ReadwiseApi.Domain.csproj", "{D61E9244-8460-4877-BF62-7CE5E850204D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Boox.ReadwiseApi.Domain", "Boox.ReadwiseApi.Domain\Boox.ReadwiseApi.Domain.csproj", "{D61E9244-8460-4877-BF62-7CE5E850204D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Readwise", "Readwise", "{CA081B07-7885-4F62-97B8-397912CD81ED}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OpenLibrary", "OpenLibrary", "{A6975638-3415-4478-9289-576F19430A94}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Boox.ReadwiseApi.Application", "Boox.ReadwiseApi.Application\Boox.ReadwiseApi.Application.csproj", "{78D1B53C-981A-4A0D-86BF-A95F212719CD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Boox.ReadwiseApi.Application", "Boox.ReadwiseApi.Application\Boox.ReadwiseApi.Application.csproj", "{78D1B53C-981A-4A0D-86BF-A95F212719CD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Boox.ReadwiseApi.Infrastructure", "Boox.ReadwiseApi.Infrastructure\Boox.ReadwiseApi.Infrastructure.csproj", "{DE26DD21-803A-4EA6-8149-546F1C3346B5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Boox.ReadwiseApi.Infrastructure", "Boox.ReadwiseApi.Infrastructure\Boox.ReadwiseApi.Infrastructure.csproj", "{DE26DD21-803A-4EA6-8149-546F1C3346B5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Boox.ReadwiseApi.Tests", "Boox.ReadwiseApi.Tests\Boox.ReadwiseApi.Tests.csproj", "{BC27A30D-828A-427E-BCA6-F23722AE2F91}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{51B59337-EBAE-4AA4-B5EC-1DB8503CD04E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Boox.Api.Shared.Serialization", "Boox.Api.Shared.Serialization\Boox.Api.Shared.Serialization.csproj", "{17CEA308-2A20-4F2B-A7B0-FF5B840357A2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ports", "Ports", "{DF71840D-D0C5-4776-882A-4D99637EC26F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Boox.Readwise.FunctionPort", "Boox.Readwise.FunctionPort\Boox.Readwise.FunctionPort.csproj", "{E45BB6F9-2D92-44F8-97D5-CE5E38DC0ECF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Mappers", "Mappers", "{F39862DC-FC5E-4BA8-93C6-1B64F7EA50DD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Boox.Readwise.Mappers", "Boox.Readwise.Mappers\Boox.Readwise.Mappers.csproj", "{376A375A-72C5-4071-A3EF-B7943CEA7A2C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +61,22 @@ Global
 		{DE26DD21-803A-4EA6-8149-546F1C3346B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE26DD21-803A-4EA6-8149-546F1C3346B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE26DD21-803A-4EA6-8149-546F1C3346B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC27A30D-828A-427E-BCA6-F23722AE2F91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC27A30D-828A-427E-BCA6-F23722AE2F91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC27A30D-828A-427E-BCA6-F23722AE2F91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC27A30D-828A-427E-BCA6-F23722AE2F91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17CEA308-2A20-4F2B-A7B0-FF5B840357A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17CEA308-2A20-4F2B-A7B0-FF5B840357A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17CEA308-2A20-4F2B-A7B0-FF5B840357A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17CEA308-2A20-4F2B-A7B0-FF5B840357A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E45BB6F9-2D92-44F8-97D5-CE5E38DC0ECF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E45BB6F9-2D92-44F8-97D5-CE5E38DC0ECF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E45BB6F9-2D92-44F8-97D5-CE5E38DC0ECF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E45BB6F9-2D92-44F8-97D5-CE5E38DC0ECF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{376A375A-72C5-4071-A3EF-B7943CEA7A2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{376A375A-72C5-4071-A3EF-B7943CEA7A2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{376A375A-72C5-4071-A3EF-B7943CEA7A2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{376A375A-72C5-4071-A3EF-B7943CEA7A2C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -59,6 +89,11 @@ Global
 		{A6975638-3415-4478-9289-576F19430A94} = {948961EE-B8B0-409B-8D72-96452486B635}
 		{78D1B53C-981A-4A0D-86BF-A95F212719CD} = {CA081B07-7885-4F62-97B8-397912CD81ED}
 		{DE26DD21-803A-4EA6-8149-546F1C3346B5} = {CA081B07-7885-4F62-97B8-397912CD81ED}
+		{BC27A30D-828A-427E-BCA6-F23722AE2F91} = {CA081B07-7885-4F62-97B8-397912CD81ED}
+		{51B59337-EBAE-4AA4-B5EC-1DB8503CD04E} = {948961EE-B8B0-409B-8D72-96452486B635}
+		{17CEA308-2A20-4F2B-A7B0-FF5B840357A2} = {51B59337-EBAE-4AA4-B5EC-1DB8503CD04E}
+		{E45BB6F9-2D92-44F8-97D5-CE5E38DC0ECF} = {DF71840D-D0C5-4776-882A-4D99637EC26F}
+		{376A375A-72C5-4071-A3EF-B7943CEA7A2C} = {F39862DC-FC5E-4BA8-93C6-1B64F7EA50DD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6DEF910B-CC13-472A-83E6-CE28CC2D9809}

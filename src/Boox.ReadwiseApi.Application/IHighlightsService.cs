@@ -4,6 +4,6 @@ namespace Boox.ReadwiseApi.Application
 {
     public interface IHighlightsService
     {
-        Task AddHighlightsAsync(List<ReadwiseHighlight> highlights);
+        Task<bool> AddHighlightsAsync(List<ReadwiseHighlight> highlights);
     }
 }

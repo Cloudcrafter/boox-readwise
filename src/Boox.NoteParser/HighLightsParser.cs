@@ -5,11 +5,12 @@ public class HighLightsParser
 {
     private const string PageNoIndicator = "Page No.: ";
     private const string NoteSeparator = "-------------------";
-    private const string DatePageSeparator = " | ";
+    private const string DatePageSeparator = "  |  ";
     private const string StartIndicator = "Reading Notes | ";
     private const string TitleStartIndicator = "<<";
     private const string TitleEndIndicator = ">>";
     private const string TitleSubtitleSeparator = "_ ";
+    private const string HighlightNoteIndicator = "【Note】";
     public Book GetHighlights(string[] highlightsFileContent)
     {
         var book = new Book();
