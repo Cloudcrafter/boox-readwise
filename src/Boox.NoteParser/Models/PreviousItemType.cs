@@ -7,6 +7,7 @@
         DatePageNo,
         ChapterLine,
         Note,
-        NoteSeparator
+        NoteSeparator,
+        NoteAnnotation
     }
 }

@@ -22,10 +22,10 @@ namespace Boox.Readwise.FunctionPort
             _highlightsService = highlightsService;
         }
 
-        [Function("Function1")]
+       // [Function("Function1")]
         public async Task<HttpResponseData> Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequestData req)
         {
-            var fileLines = File.ReadAllLines("basb.txt");
+            var fileLines = File.ReadAllLines("sa.txt");
 
             var highlights = _highLightsParser.GetHighlights(fileLines);
 

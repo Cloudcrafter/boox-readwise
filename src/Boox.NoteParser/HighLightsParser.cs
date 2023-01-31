@@ -5,7 +5,7 @@ public class HighLightsParser
 {
     private const string PageNoIndicator = "Page No.: ";
     private const string NoteSeparator = "-------------------";
-    private const string DatePageSeparator = "  |  ";
+    private const string DatePageSeparator = "|";
     private const string StartIndicator = "Reading Notes | ";
     private const string TitleStartIndicator = "<<";
     private const string TitleEndIndicator = ">>";
@@ -41,7 +41,7 @@ public class HighLightsParser
 
             if (highlightsFileLine.Contains(PageNoIndicator))
             {
-                if(highlight == null)
+                if (highlight == null)
                 {
                     highlight = book.StartNewHighLight();
                 }
@@ -53,37 +53,49 @@ public class HighLightsParser
             if (highlightsFileLine.Equals(NoteSeparator))
             {
                 highlight = book.StartNewHighLight();
-                previousItemType = PreviousItemType.NoteSeparator; 
+                previousItemType = PreviousItemType.NoteSeparator;
                 continue;
             }
 
-            if(previousItemType == PreviousItemType.NoteSeparator && !highlightsFileLine.Contains(PageNoIndicator))
+            if (previousItemType == PreviousItemType.NoteSeparator && !highlightsFileLine.Contains(PageNoIndicator))
             {
                 highlight.ChapterTitle = highlightsFileLine.Trim();
                 previousItemType = PreviousItemType.ChapterLine;
                 continue;
             }
 
-            if(previousItemType == PreviousItemType.DatePageNo)
+            if (previousItemType == PreviousItemType.DatePageNo)
             {
                 highlight.HighlightText = highlightsFileLine.Trim();
                 previousItemType = PreviousItemType.Note;
                 continue;
             }
+
+            if (highlightsFileLine.StartsWith(HighlightNoteIndicator))
+            {
+                highlight.Note = GetHighLightAnnotation(highlightsFileLine);
+                previousItemType = PreviousItemType.NoteAnnotation;
+                continue;
+            }
         }
+    }
+
+    private string? GetHighLightAnnotation(string highlightsFileLine)
+    {
+        return new String(highlightsFileLine.Skip(HighlightNoteIndicator.Length).ToArray());
     }
 
     private (string Title, string Author) GetTitleAndAuthor(string startLine)
     {
         int startIndex = startLine.IndexOf(TitleStartIndicator) + TitleStartIndicator.Length;
-        int endIndex = startLine.IndexOf(TitleEndIndicator) + TitleEndIndicator.Length;
+        int endIndex = startLine.IndexOf(TitleEndIndicator);
 
         string[] titleSubTitle = startLine
             .Substring(startIndex, endIndex - startIndex)
             .Split(TitleSubtitleSeparator, StringSplitOptions.RemoveEmptyEntries);
 
         string title = titleSubTitle[0];
-        string author = startLine.Substring(endIndex, startLine.Length - endIndex);
+        string author = startLine.Substring(endIndex+TitleEndIndicator.Length, startLine.Length - endIndex-TitleEndIndicator.Length);
 
         return (title, author);
     }
@@ -93,9 +105,9 @@ public class HighLightsParser
         //2022-12-27 06:44  |  Page No.: 18
         string[] datePageNumberComponents = dateAndPageLIne.Split(DatePageSeparator);
 
-        DateTime.TryParseExact(datePageNumberComponents[0], "yyyy-MM-dd hh:mm", CultureInfo.InvariantCulture,DateTimeStyles.None,out var noteDate);
+        DateTime.TryParseExact(datePageNumberComponents[0].Trim(), "yyyy-MM-dd hh:mm", CultureInfo.InvariantCulture, DateTimeStyles.None, out var noteDate);
 
-        int.TryParse(datePageNumberComponents[1].Remove(0,PageNoIndicator.Length), out int pageNumber);
+        int.TryParse(datePageNumberComponents[1].Remove(0, PageNoIndicator.Length), out int pageNumber);
 
         return (noteDate, pageNumber);
     }

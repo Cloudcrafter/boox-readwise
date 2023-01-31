@@ -11,6 +11,7 @@ namespace Boox.ReadwiseApi.Domain.Models
         public string Category => "books";
         public string Location_type => "page";
         public int Location { get; set; }
+        public string? Note { get; set; }
         public DateTime? Highlighted_At { get; set; }
     }
 }

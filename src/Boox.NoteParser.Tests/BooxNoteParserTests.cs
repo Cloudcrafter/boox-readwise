@@ -1,10 +1,4 @@
 using FluentAssertions;
-using FluentAssertions.Common;
-using FluentAssertions.Equivalency;
-using Microsoft.VisualBasic;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using System.Runtime.Intrinsics.X86;
-using Xunit;
 
 namespace Boox.NoteParser.Tests;
 
@@ -84,11 +78,31 @@ public class BooxNoteParserTests
             "Reading Notes | <<My test book_ SubtTitle - Author>>Author",
             "2022-12-27 06:43 | Page No.: 16",
             "Note text",
+            "-------------------",
+            "My Chapter"
+        };
+
+        var parser = new HighLightsParser();
+        var book = parser.GetHighlights(lines);
+        book.Highlights.Count.Should().Be(2);
+        book.Highlights.First().HighlightText.Should().Be(lines[2]);
+    }
+
+    [Fact]
+    public void GetHighLights_NoteAnnotationPresent_NoteIsSet()
+    {
+        var lines = new[]
+        {
+            "Summary",
+            "2022-12-27 06:43 | Page No.: 16",
+            "Figure 1.14: How to choose the right SDLC model",
+            "【Note】figurative in book to notes"
         };
 
         var parser = new HighLightsParser();
         var book = parser.GetHighlights(lines);
         book.Highlights.Count.Should().Be(1);
-        book.Highlights.First().HighlightText.Should().Be(lines[2]);
+        book.Highlights.First().Note.Should().Be("figurative in book to notes");
+
     }
 }
