@@ -38,5 +38,5 @@ jobs:
         with:
           app-name: 'BooxReadwiseFunctionPort20230131160104'
           slot-name: 'Production'
-          package: '${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/output'
+          package: './output'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_940DC3ECF9444357A7C3EDC474E265BB }}
