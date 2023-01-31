@@ -29,7 +29,7 @@ jobs:
         shell: bash
         run: |
           pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/src/Boox.Readwise.FunctionPort'
-          dotnet build --configuration Release --output ./output
+          dotnet build --configuration Release --output /home/runner/work/boox-readwise/boox-readwise/output
           popd
 
       - name: 'Run Azure Functions Action'
@@ -38,5 +38,5 @@ jobs:
         with:
           app-name: 'BooxReadwiseFunctionPort20230131160104'
           slot-name: 'Production'
-          package: './output'
+          package: '/home/runner/work/boox-readwise/boox-readwise/output'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_940DC3ECF9444357A7C3EDC474E265BB }}
