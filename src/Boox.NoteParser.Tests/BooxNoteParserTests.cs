@@ -105,4 +105,20 @@ public class BooxNoteParserTests
         book.Highlights.First().Note.Should().Be("figurative in book to notes");
 
     }
+    [Fact]
+    public void GetHighLights_PageNumberIsPresent_PageNumberIsSet()
+    {
+        var lines = new[]
+        {
+            "Summary",
+            "2022-12-27 06:43 | Page No.: 16",
+            "Figure 1.14: How to choose the right SDLC model",
+            "【Note】figurative in book to notes"
+        };
+
+        var parser = new HighLightsParser();
+        var book = parser.GetHighlights(lines);
+        book.Highlights.Count.Should().Be(1);
+        book.Highlights.First().PageNumber.Should().Be(16);
+    }
 }
